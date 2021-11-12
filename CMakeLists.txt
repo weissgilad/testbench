@@ -4,3 +4,5 @@ project(testbench)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(testbench src/main.cpp)
+
+add_subdirectory(Tests)
