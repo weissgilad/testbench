@@ -53,10 +53,10 @@ int main() {
     X(/, float) \
     X(%, int) \
 
-    int num1 = 2, num2 = 4;    //input numbers
+    int num1 = 2, num2 = 4;    // hardcoded input numbers
     char oper = '%';
 
-    switch (oper)    //doing the appropriate action according to the inputed operator
+    switch (oper)    // doing the appropriate action according to the inputed operator
     {
 #define X(op, type) \
     case #op[0]: \
@@ -66,7 +66,7 @@ int main() {
 #undef X
         default:
             cout << "ERROR" << endl;
-            break;    //unnecessary break for good measure :)
+            break;    // unnecessary break for good measure :)
     }
     return 0;
 }
