@@ -3,4 +3,4 @@ project(testbench)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(testbench main.cpp)
+add_executable(testbench src/main.cpp)
