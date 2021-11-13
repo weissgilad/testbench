@@ -45,24 +45,29 @@ constexpr WORD str_to_word(const char *word_str) {
     return WORD::ERROR;
 }
 
-#define MATH_OP_LIST(X) \
-    X(+, int64_t  )     \
-    X(-, int64_t  )     \
-    X(*, int64_t  )     \
-    X(/, double   )     \
-    X(%, int64_t  )     \
+template <typename...Args>
+auto constexpr __do_nothing_return_last(Args&&...args) {
+    // comma operator discards the result of the left
+    //  must be in () because of it's low precedence
+    //  calling a function with it gets rid of the 'no effect' warning so std::forward it is
+    return (std::forward<Args>(args), ...);
+}
 
-long double do_math_op() {
+#define MATH_OP_LIST(X)                     \
+    X(+, int64_t, __builtin_add_overflow_p) \
+    X(-, int64_t, __builtin_sub_overflow_p) \
+    X(*, int64_t, __builtin_mul_overflow_p) \
+    X(/, double , __do_nothing_return_last) \
+    X(%, int64_t, __do_nothing_return_last) \
 
-    int num1 = 2, num2 = 4;    // hardcoded input numbers
-    char oper = '%';
-
+long double do_math_op(int64_t lhs = 2, int64_t rhs = 4, char oper = '%') {
+   (void)__do_nothing_return_last(1,2,3);
     switch (oper) // doing the appropriate action according to the inputed operator
     {
-#define X(op, type) \
-    case #op[0]:    \
-        return (type)num1 op num2; \
-        std::cout << num1 << oper << num2 << "=" << (type)num1 op num2 << std::endl; \
+#define X(op, type, overflow) \
+    case #op[0]:              \
+        return overflow(lhs, rhs, 0) ? 0 : (type)lhs op rhs; \
+        std::cout << lhs << oper << rhs << "=" << (type)lhs op rhs << std::endl; \
         break;
         MATH_OP_LIST(X)
 #undef X
