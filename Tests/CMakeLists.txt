@@ -34,11 +34,19 @@ target_link_libraries(test_test_utils gtest gtest_main)
 
 # src/xmarco_stuff
 set(OG_XMACRO_INCLUDE_LIST ${OG_PROJECT_SRC_DIR}/${XMACRO_INCLUDE_LIST})
-set(TEST_XMACRO_FILE_LIST xmacro_stuff/test_xmacro_definitions.cc)
+set(TEST_XMACRO_FILE_LIST shadow_src/xmacro_stuff/test_xmacro_definitions.cc)
 list(APPEND OG_INCLUDE_LIST ${OG_XMACRO_INCLUDE_LIST})
 list(APPEND TEST_FILE_LIST ${TEST_XMACRO_FILE_LIST})
 add_executable(test_xmacro ${TEST_XMACRO_FILE_LIST} ${TEST_UTILS_FILE_LIST} ${OG_XMACRO_INCLUDE_LIST})
 target_link_libraries(test_xmacro gtest gtest_main)
+
+# src/Utils
+set(OG_UTILS_INCLUDE_LIST ${OG_PROJECT_SRC_DIR}/${UTILS_INCLUDE_LIST})
+set(TEST_UTILS_FILE_LIST shadow_src/Utils/test_constexpr_utils.cc)
+list(APPEND OG_INCLUDE_LIST ${OG_UTILS_INCLUDE_LIST})
+list(APPEND TEST_FILE_LIST ${TEST_UTILS_FILE_LIST})
+add_executable(test_Utils ${TEST_UTILS_FILE_LIST} ${TEST_UTILS_FILE_LIST} ${OG_UTILS_INCLUDE_LIST})
+target_link_libraries(test_Utils gtest gtest_main)
 
 # all tests
 add_executable(Google_Tests_run ${TEST_FILE_LIST} ${TEST_UTILS_FILE_LIST} ${OG_INCLUDE_LIST})

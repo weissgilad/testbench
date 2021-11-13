@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include "Utils/constexpr_utils.h"
 
 uint32_t constexpr constexpr_hash(const char *pInput, unsigned int uPrev = 5381) {
     return *pInput
@@ -45,23 +46,14 @@ constexpr WORD str_to_word(const char *word_str) {
     return WORD::ERROR;
 }
 
-template <typename...Args>
-auto constexpr __do_nothing_return_last(Args&&...args) {
-    // comma operator discards the result of the left
-    //  must be in () because of it's low precedence
-    //  calling a function with it gets rid of the 'no effect' warning so std::forward it is
-    return (std::forward<Args>(args), ...);
-}
-
 #define MATH_OP_LIST(X)                     \
     X(+, int64_t, __builtin_add_overflow_p) \
     X(-, int64_t, __builtin_sub_overflow_p) \
     X(*, int64_t, __builtin_mul_overflow_p) \
-    X(/, double , __do_nothing_return_last) \
-    X(%, int64_t, __do_nothing_return_last) \
+    X(/, double , do_nothing_return_last)   \
+    X(%, int64_t, do_nothing_return_last)   \
 
 long double do_math_op(int64_t lhs = 2, int64_t rhs = 4, char oper = '%') {
-   (void)__do_nothing_return_last(1,2,3);
     switch (oper) // doing the appropriate action according to the inputed operator
     {
 #define X(op, type, overflow) \
