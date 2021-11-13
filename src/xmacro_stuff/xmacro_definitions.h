@@ -43,8 +43,8 @@ constexpr WORD str_to_word(const char *word_str) {
     X(+, int64_t, __builtin_add_overflow_p) \
     X(-, int64_t, __builtin_sub_overflow_p) \
     X(*, int64_t, __builtin_mul_overflow_p) \
-    X(/, double , do_nothing_return_last)   \
-    X(%, int64_t, do_nothing_return_last)   \
+    X(/, double , do_nothing_return_last  ) \
+    X(%, int64_t, do_nothing_return_last  ) \
 
 long double do_math_op(int64_t lhs = 2, int64_t rhs = 4, char oper = '%') {
     switch (oper) // doing the appropriate action according to the inputed operator
