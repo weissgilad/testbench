@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 uint32_t constexpr constexpr_hash(const char *pInput, unsigned int uPrev = 5381) {
     return *pInput
@@ -44,29 +45,31 @@ constexpr WORD str_to_word(const char *word_str) {
     return WORD::ERROR;
 }
 
+#define MATH_OP_LIST(X) \
+    X(+, int64_t  )     \
+    X(-, int64_t  )     \
+    X(*, int64_t  )     \
+    X(/, double   )     \
+    X(%, int64_t  )     \
 
-int math_ops() {
-#define OP_LIST(X) \
-    X(+, int) \
-    X(-, int) \
-    X(*, int) \
-    X(/, float) \
-    X(%, int) \
+long double do_math_op() {
 
     int num1 = 2, num2 = 4;    // hardcoded input numbers
     char oper = '%';
 
-    switch (oper)    // doing the appropriate action according to the inputed operator
+    switch (oper) // doing the appropriate action according to the inputed operator
     {
 #define X(op, type) \
-    case #op[0]: \
+    case #op[0]:    \
+        return (type)num1 op num2; \
         std::cout << num1 << oper << num2 << "=" << (type)num1 op num2 << std::endl; \
         break;
-        OP_LIST(X)
+        MATH_OP_LIST(X)
 #undef X
         default:
             std::cout << "ERROR" << std::endl;
             break;    // unnecessary break for good measure :)
     }
+
     return 0;
 }
