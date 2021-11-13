@@ -1,4 +1,9 @@
 #pragma once
+uint32_t constexpr constexpr_hash(const char *pInput, unsigned int uPrev = 5381) {
+    return *pInput
+           ? constexpr_hash(pInput + 1, uPrev * 33 + *pInput)
+           : uPrev;
+}
 
 template <typename...Args>
 auto constexpr do_nothing_return_last(Args&&...args) {

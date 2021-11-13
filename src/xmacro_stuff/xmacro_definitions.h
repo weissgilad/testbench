@@ -4,13 +4,6 @@
 #include <cmath>
 #include "Utils/constexpr_utils.h"
 
-uint32_t constexpr constexpr_hash(const char *pInput, unsigned int uPrev = 5381) {
-    return *pInput
-           ? constexpr_hash(pInput + 1, uPrev * 33 + *pInput)
-           : uPrev;
-}
-
-
 #define LIST_OF_WORDS(X) \
     X(ONE, "one")        \
     X(TWO, "two")        \
