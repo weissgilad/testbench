@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 include_directories(src)
 
-add_executable(testbench src/main.cpp)
+set(XMACRO_INCLUDE_LIST src/xmacro_stuff/xmacro_definitions.h)
+
+add_executable(testbench src/main.cpp ${XMACRO_INCLUDE_LIST})
 
 add_subdirectory(Tests)
