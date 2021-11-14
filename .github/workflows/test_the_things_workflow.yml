@@ -10,9 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Install gtest submodule
-      run: git submodule update --init
-    - uses: actions/checkout@v1
+    - name: checkout
+    - uses: actions/checkout@v2
       with: 
         submodules: true
     - name: configure
