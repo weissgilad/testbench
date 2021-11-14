@@ -11,7 +11,7 @@ protected:
 TEST_F(Test_exists_in_list, ConstepxrnessInList) {
     // this test will simply not compile if the function is not constexpr
     constexpr bool placeholder = exists_in_list(1 , m_test_array);
-    ASSERT_TRUE(placeholder);
+    ASSERT_FALSE(placeholder);
 }
 
 TEST_F(Test_exists_in_list, NotInList) {
