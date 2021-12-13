@@ -17,7 +17,12 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 set(OG_PROJECT_SRC_DIR ${CMAKE_SOURCE_DIR})
-include_directories(${OG_PROJECT_SRC_DIR}/src)
+include_directories(${OG_PROJECT_SRC_DIR}) # this is without /src . the original code assumes src to be included
+include_directories(${CMAKE_CURRENT_LIST_DIR}/mock_src) # this is instead of src
+# this way i may include files from the original project by using 'src/...' while
+#    the original project will (as usual) include files without prefixing with 'src'
+# this can also be done without adding the original code to the include directories and then using explicit ../../src
+#    but this forces a specific file tree setup, which may be fine as well
 
 glob_code_files_in_directory(TEST_UTILS_FILE_LIST
                              ${CMAKE_CURRENT_LIST_DIR}/TestUtils
@@ -34,9 +39,13 @@ target_link_libraries(test_test_utils gtest gtest_main)
 
 # src/xmarco_stuff
 set(OG_XMACRO_INCLUDE_LIST ${OG_PROJECT_SRC_DIR}/${XMACRO_INCLUDE_LIST})
-set(TEST_XMACRO_FILE_LIST shadow_src/xmacro_stuff/test_xmacro_definitions.cc)
+set(TEST_XMACRO_FILE_LIST shadow_src/xmacro_stuff/test_xmacro_definitions.cc
+                          ${OG_PROJECT_SRC_DIR}/src/xmacro_stuff/xmacro_definitions.h
+                          ${CMAKE_CURRENT_LIST_DIR}/mock_src/Utils/constexpr_utils)
+
 list(APPEND OG_INCLUDE_LIST ${OG_XMACRO_INCLUDE_LIST})
 list(APPEND TEST_FILE_LIST ${TEST_XMACRO_FILE_LIST})
+#add_executable(test_xmacro ${TEST_XMACRO_FILE_LIST} ${TEST_UTILS_FILE_LIST})
 add_executable(test_xmacro ${TEST_XMACRO_FILE_LIST} ${TEST_UTILS_FILE_LIST} ${OG_XMACRO_INCLUDE_LIST})
 target_link_libraries(test_xmacro gtest gtest_main)
 

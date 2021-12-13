@@ -4,6 +4,10 @@
 #include <cmath>
 #include "Utils/constexpr_utils.h"
 
+/** if i were to include this way instead of the above way, the mock wouldn't work
+ *      and it would just go to the original code */
+// #include "src/Utils/constexpr_utils.h"
+
 #define LIST_OF_WORDS(X) \
     X(ONE, "one")        \
     X(TWO, "two")        \
